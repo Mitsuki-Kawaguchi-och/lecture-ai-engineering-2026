@@ -82,6 +82,7 @@ agent = Agent(instructions=INSTRUCTIONS)
 agent.tool_plain(tools.search_glossary)
 agent.tool_plain(tools.get_lecture_summary)
 agent.tool_plain(tools.make_quiz)
+agent.tool_plain(tools.search_materials)
 
 # 第5回: 使う MCP サーバーの設定ファイル。Claude Desktop や Cursor と同じ "mcpServers" 形式
 MCP_CONFIG = Path(__file__).resolve().parent / "mcp_servers.json"
@@ -164,7 +165,7 @@ def print_trace(result, elapsed_seconds: float | None = None) -> None:
                         if not data["children"]:
                             print(f"    （末端ページ・本文{len(node.get('content', ''))}文字を取得）")
                 else:
-                    print(f"[tool return] {part.tool_name} -> {str(part.content)[:120]}…")
+                    print(f"[tool return] {part.tool_name} -> {part.content}")
     usage = result.usage
     if elapsed_seconds is not None:
         print(f"[time] 回答完了まで {elapsed_seconds:.2f} 秒（検索・埋め込みを含む）")
